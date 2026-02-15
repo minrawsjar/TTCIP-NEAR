@@ -1,0 +1,25 @@
+{
+	email admin@textchain.dev
+}
+
+51-20-83-132.sslip.io {
+	# SMS handler (Twilio webhook)
+	handle /sms/* {
+		reverse_proxy sms-handler:8080
+	}
+
+	# Airtime service (Africa's Talking webhook)
+	handle /airtime/* {
+		reverse_proxy airtime:8082
+	}
+
+	# Backend API (fallback)
+	handle /api/* {
+		reverse_proxy backend:3000
+	}
+
+	# Default: 404
+	handle {
+		respond "Not Found" 404
+	}
+}

@@ -1,0 +1,109 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=textchain
+      - POSTGRES_PASSWORD=textchain
+      - POSTGRES_DB=textchain
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U textchain"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # SMS Request Handler (Rust) - Port 8080
+  sms-handler:
+    build: ./sms-request-handler
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./sms-request-handler/.env
+    environment:
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8080
+      - BACKEND_URL=http://backend:3000
+      - ARC_SERVICE_URL=http://arc:8084
+      - DATABASE_URL=postgres://textchain:textchain@postgres:5432/textchain
+    depends_on:
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_started
+      arc:
+        condition: service_started
+    restart: unless-stopped
+
+  # Backend API (TypeScript) - Port 3000
+  backend:
+    build: ./backend-integration
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend-integration/.env
+    environment:
+      - SMS_HANDLER_URL=http://sms-handler:8080
+      - YELLOW_URL=http://yellow:8083
+    restart: unless-stopped
+
+  # Yellow Network Batch Service - Port 8083
+  yellow:
+    build: ./yellow
+    ports:
+      - "8083:8083"
+    env_file:
+      - ./yellow/.env
+    environment:
+      - PORT=8083
+      - BACKEND_URL=http://backend:3000
+    restart: unless-stopped
+
+  # Airtime Service - Port 8082
+  airtime:
+    build: ./airtime-service
+    ports:
+      - "8082:8082"
+    env_file:
+      - ./airtime-service/.env
+    environment:
+      - PORT=8082
+      - BACKEND_URL=http://backend:3000
+    restart: unless-stopped
+
+  # Arc/Circle Cashout Service - Port 8084
+  arc:
+    build: ./arc-service
+    ports:
+      - "8084:8084"
+    env_file:
+      - ./arc-service/.env
+    environment:
+      - PORT=8084
+      - BACKEND_URL=http://backend:3000
+    volumes:
+      - ./arc-service/wallets.json:/app/wallets.json
+    restart: unless-stopped
+
+  # Caddy reverse proxy with auto-HTTPS via sslip.io
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - sms-handler
+      - airtime
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

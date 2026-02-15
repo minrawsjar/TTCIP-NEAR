@@ -1,0 +1,217 @@
+/* Pools panel — title + filters on one row; dark dropdowns */
+.pools-panel__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.pools-panel__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--base-300);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.dash-filters--row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+/* Dark dropdown: select + options match theme */
+.pools-panel__top .dash-filter__select {
+  background: var(--base-200, #121214);
+  color: var(--base-300);
+  border: 1px solid var(--glass-border);
+  padding: 0.5rem 2rem 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  min-height: 2.25rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+}
+
+.pools-panel__top .dash-filter__select:focus {
+  outline: none;
+  border-color: var(--stroke);
+  box-shadow: 0 0 0 2px rgba(34, 211, 197, 0.2);
+}
+
+.pools-panel__top .dash-filter__select option {
+  background: var(--base-200, #121214);
+  color: var(--base-300);
+}
+
+[data-theme="light"] .pools-panel__top .dash-filter__select {
+  background-color: var(--base-200);
+  color: var(--base-300);
+}
+
+[data-theme="light"] .pools-panel__top .dash-filter__select option {
+  background: var(--base-200);
+  color: var(--base-300);
+}
+
+/* Pools grid and cards */
+.pools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pool-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+  position: relative;
+}
+
+/* Active: full vibrant green border, clickable */
+.pool-card--active {
+  border-color: var(--stroke);
+  box-shadow: 0 0 0 1px var(--stroke);
+}
+.pool-card--clickable {
+  cursor: pointer;
+}
+
+.pool-card--active:hover {
+  box-shadow: 0 0 0 1px var(--stroke), 0 12px 32px rgba(34, 211, 197, 0.12);
+}
+
+/* Inactive: half transparent, no green */
+.pool-card--inactive {
+  opacity: 0.5;
+}
+
+.pool-card--inactive:hover {
+  opacity: 0.65;
+}
+
+.pool-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.pool-card__country {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--base-300);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.pool-card__status {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Active: solid green pill, white text */
+.pool-card__status--live {
+  background: var(--stroke);
+  color: var(--base-100, #0a0a0c);
+  border: none;
+}
+
+[data-theme="light"] .pool-card__status--live {
+  color: #0a0a0c;
+}
+
+/* Inactive: grey pill */
+.pool-card__status--soon {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--base-300);
+  border: none;
+}
+
+.pool-card__provider {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.pool-card--active .pool-card__provider {
+  color: var(--stroke);
+}
+
+.pool-card--inactive .pool-card__provider {
+  color: var(--base-300);
+  opacity: 0.9;
+}
+
+.pool-card__desc {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--base-300);
+  opacity: 0.8;
+  margin: 0 0 1.25rem;
+}
+
+.pool-card--inactive .pool-card__desc {
+  opacity: 0.65;
+}
+
+.pool-card__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.pool-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.pool-card__stat-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.65;
+}
+
+.pool-card__stat-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.pool-card--active .pool-card__stat-value {
+  color: var(--stroke);
+}
+
+.pool-card--active .pool-card__stat-value--yield {
+  color: var(--stroke);
+}
+
+.pool-card--inactive .pool-card__stat-value,
+.pool-card--inactive .pool-card__stat-value--yield {
+  color: var(--base-300);
+  opacity: 0.9;
+}

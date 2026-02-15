@@ -1,0 +1,37 @@
+{
+  "name": "text-to-chain-backend-integration",
+  "version": "1.0.0",
+  "description": "Backend integration for Text-to-Chain smart contracts",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node api-server.ts",
+    "start:near": "ts-node near-api-server.ts",
+    "test": "ts-node test-integration.ts",
+    "test:msg91": "node test-msg91-simple.js",
+    "test:msg91:ts": "ts-node test-msg91.ts",
+    "test:local": "node test-local.js",
+    "example": "ts-node example-usage.ts",
+    "near:setup": "node setup-near-with-account.js",
+    "near:deploy-token": "node deploy-txtc-token.js",
+    "near:deploy-pool": "node deploy-near-pool.js",
+    "near:deploy-pool-only": "node deploy-near-pool-deploy-only.js",
+    "near:create-liquidity": "node create-txtc-near-pool.js",
+    "test:sms": "node test-simple-join.js",
+    "test:commands": "node test-commands.js"
+  },
+  "dependencies": {
+    "axios": "^1.13.5",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.9.0",
+    "express": "^4.18.2",
+    "near-api-js": "^3.0.4",
+    "twilio": "^5.12.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.3.0"
+  }
+}

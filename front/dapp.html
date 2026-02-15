@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TTC-IP dApp | Dashboard</title>
+    <meta name="description" content="TTC-IP dApp: pools, tokenized assets, yield. Protocol stats and dashboard." />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/elements/dapp.css" />
+    <link rel="stylesheet" href="/elements/dash.css" />
+    <link rel="stylesheet" href="/elements/pools.css" />
+  </head>
+  <body class="dapp-page">
+    <nav class="navbar navbar--dapp">
+      <a href="/" class="nav-logo">ttc-ip</a>
+      <div class="nav-dapp-links">
+        <a href="#pools" class="nav-dapp-link is-active" data-panel="pools">Pools</a>
+        <a href="#tokenized" class="nav-dapp-link" data-panel="tokenized">Tokenized assets</a>
+        <a href="#yield" class="nav-dapp-link" data-panel="yield">Yield</a>
+      </div>
+      <div class="nav-right">
+        <button type="button" class="nav-login" id="nav-login" aria-haspopup="dialog" aria-expanded="false">Login</button>
+        <a href="#wallet" class="nav-wallet" id="nav-wallet" data-panel="wallet" style="display: none;">Wallet</a>
+        <button type="button" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <span class="theme-icon sun" aria-hidden="true">☀</span>
+          <span class="theme-icon moon" aria-hidden="true">☽</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Connect wallet modal (wagmi) -->
+    <div class="login-modal" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" hidden>
+      <div class="login-modal__backdrop" id="login-modal-backdrop"></div>
+      <div class="login-modal__box">
+        <h2 class="login-modal__title" id="login-modal-title">Connect wallet</h2>
+        <p class="login-modal__sub">Connect your Ethereum wallet to use the dApp</p>
+        <div class="login-modal__options">
+          <button type="button" class="login-modal__btn login-modal__btn--connect" id="login-modal-connect">Connect wallet</button>
+        </div>
+        <button type="button" class="login-modal__close" id="login-modal-close" aria-label="Close">×</button>
+      </div>
+    </div>
+
+    <!-- Floating dApp container -->
+    <div class="dapp-float">
+      <aside class="dapp-sidebar" id="dapp-sidebar">
+      <div class="dapp-sidebar__top" aria-hidden="true">
+        <button type="button" class="dapp-sidebar__close" id="sidebar-close" aria-label="Close sidebar">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="dapp-sidebar__card dapp-sidebar__protocol-card">
+        <span class="dapp-sidebar__card-icon">◆</span>
+        <div class="dapp-sidebar__card-text">
+          <span class="dapp-sidebar__card-title">TTC-IP</span>
+          <span class="dapp-sidebar__card-sub">Protocol</span>
+        </div>
+      </div>
+      <div class="dapp-sidebar__search-wrap">
+        <span class="dapp-sidebar__search-icon" aria-hidden="true">⌕</span>
+        <input type="search" class="dapp-sidebar__search" id="sidebar-search" placeholder="Search pools, assets…" aria-label="Search" />
+      </div>
+      <div class="dapp-sidebar__stats" id="dapp-sidebar-stats"></div>
+      <div class="dapp-sidebar__bottom">
+        <a href="/" class="dapp-sidebar__home">← Home</a>
+      </div>
+    </aside>
+
+    <!-- Main content (margin-left for sidebar on desktop) -->
+    <div class="dapp-main-wrap">
+      <button type="button" class="dapp-header__menu" id="sidebar-open" aria-label="Open menu">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <div class="dapp-content-grid">
+        <div class="dapp-content" id="dapp-content"></div>
+      </div>
+    </div>
+    </div>
+
+    <script type="module" src="/dapp.js"></script>
+  </body>
+</html>
